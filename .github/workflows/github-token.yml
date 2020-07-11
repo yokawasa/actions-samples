@@ -20,4 +20,4 @@ jobs:
         --data '{
           "title": "Automated issue for commit: ${{ github.sha }}",
           "body": "This issue was automatically created by the GitHub Action workflow **${{ github.workflow }}**"
-          }
+          }'
