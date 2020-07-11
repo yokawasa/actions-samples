@@ -1,4 +1,4 @@
-name: Matrix Build Pattern
+name: Matrix build pattern
 on:
   push:
     branches:
