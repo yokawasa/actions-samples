@@ -1,4 +1,4 @@
-name: Create issue on commit
+name: REST API with GITHUB_TOKEN
 # Source from https://help.github.com/actions/configuring-and-managing-workflows/authenticating-with-the-github_token
 on:
   push:
