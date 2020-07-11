@@ -1,0 +1,34 @@
+name: Sharing data between steps
+on:
+  push:
+    branches:
+      - 'master'
+    paths:
+      - '.github/workflows/share-data-steps.yml'
+
+jobs:
+  share_data1:
+    name: Data Share Between Multi-Steps using file
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dump Env Variables
+        run: |
+          echo "HOME: ${HOME}"
+          echo "GITHUB_WORKSPACE: ${GITHUB_WORKSPACE}"
+      - name: Write Data in a Job
+        run: echo "Hello!!" > ${GITHUB_WORKSPACE}/myoutput.txt
+      - name: Read Data in a Job
+        run: |
+          value=$(cat ${GITHUB_WORKSPACE}/myoutput.txt)
+          echo "Read Data: ${value}"
+
+  share_data2:
+    name: Data Share Between Multi-Steps using set-env and set-output
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "::set-env name=result1::Hello"
+      - run: echo "Result1: ${result1}"
+      - id: set-result
+        run: echo "::set-output name=result2::Hola"
+      - run: echo "Result2: ${{ steps.set-result.outputs.result2 }}"
+
