@@ -1,0 +1,24 @@
+name: Run on ontainers
+on:
+  push:
+    branches:
+      - 'master'
+    paths:
+      - '.github/workflows/run-on-containers.yml'
+
+jobs:
+  build1:
+    name: Build on centos:6
+    runs-on: ubuntu-latest
+    container: centos:6
+    steps:
+      - run: cat /etc/*release
+
+  build2:
+    name: Build on centos:6 (Alternateive)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run on centos:6 (step level)
+        uses: docker://centos:6
+        with:
+          args: /bin/sh -c "cat /etc/*release"

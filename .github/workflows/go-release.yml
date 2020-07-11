@@ -1,4 +1,4 @@
-name: Go Release Project
+name: Go release project
 on:
   push:
     branches:
