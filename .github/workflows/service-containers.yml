@@ -9,7 +9,7 @@ on:
       - '.github/workflows/service-containers.yml'
 
 jobs:
-  # 全てのStepをコンテナー内で実行
+  ## Running all steps on containers
   container-job:
     runs-on: ubuntu-latest
 
@@ -24,9 +24,9 @@ jobs:
           POSTGRES_PASSWORD: postgres
           POSTGRES_DB: postgres
         ports:
-        # ポートマッピング
+        # port mapping
         - 5432:5432
-        # ヘルスチェック
+        # health check
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
 
     steps:
@@ -36,12 +36,12 @@ jobs:
     - run: node client.js
       working-directory: ./resources/postgres
       env:
-        # 全てコンテナ内で実行する場合はコンテナネットワークでの実行なので
-        # サービス名を指定してアクセスする。ここではpostgres
+        # Access via service name (postgres) in running on conatiners
+        # as it's executed in container network
         POSTGRES_HOST: postgres
         POSTGRES_PORT: ${{ job.services.postgres.ports[5432] }}
 
-  # 全てのStepを仮想マシン上で実行
+  ## Running all steps on VM
   vm-job:
     runs-on: ubuntu-latest
 
@@ -53,10 +53,9 @@ jobs:
           POSTGRES_PASSWORD: postgres
           POSTGRES_DB: postgres
         ports:
-        # <コンテナのポートを指定しない場合>
-        # コンテナのポートは空いているポートにランダムに割り当てられる
+        # Randumly open port will be assigned if port# is not given
         - 5432/tcp
-        # ヘルスチェック
+        # health check
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
 
     steps:
@@ -66,7 +65,7 @@ jobs:
     - run: node client.js
       working-directory: ./resources/postgres
       env:
-        # VM上での実行の場合、サービスコンテナは、ホストのポートバインディング
-        # を使用するためlocalhostを介してアクセスします
+        # Access via 'localhost' in running on VM case as service container
+        # use port binding of host
         POSTGRES_HOST: localhost
         POSTGRES_PORT: ${{ job.services.postgres.ports[5432] }} 
