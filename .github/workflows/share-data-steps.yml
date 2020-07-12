@@ -24,13 +24,13 @@ jobs:
     name: Data Share Between Multi-Steps using set-env and set-output
     runs-on: ubuntu-latest
     steps:
-      - name: Set result1 using set-env in a job
+      - name: Set result1 in a job using set-env
         run: |
           exec_time=$(date "+%s")
           echo ::set-env name=result1::${exec_time}
       - name: Get result1 in a subsequent step of the Job
         run: echo "${result1}"
-      - name: Set result2 using set-output
+      - name: Set result2 in a job using set-output
         id: setdata
         run: |
           exec_time=$(date "+%s")
