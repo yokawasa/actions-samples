@@ -22,3 +22,10 @@ A collection of GitHub Actions samples and tips
 | [Cache dependencies](.github/workflows/cache.yml) | Sample of caching dependencies and build outputs to improve workflow execution time using [actions/cache](https://github.com/actions/cache) | [![Cache dependencies](https://github.com/yokawasa/actions-samples/workflows/Cache%20dependencies/badge.svg)](https://github.com/yokawasa/actions-samples/actions?query=workflow%3A%22Cache+dependencies%22) |
 | [ChatOps with github-script](.github/workflows/github-script-chatops.yml) | Sample of achieving ChatOps that assign user to an issue using [action/github-script](https://github.com/actions/github-script). There are alot more things you can do with github-script. Find many samples [here](https://github.com/actions/github-script) | [![ChatOps with github-script](https://github.com/yokawasa/actions-samples/workflows/ChatOps%20with%20github-script/badge.svg)](https://github.com/yokawasa/actions-samples/actions?query=workflow%3A%22ChatOps+with+github-script%22)|
 | [Vulnerability Scan with Trivy](.github/workflows/trivy-scan.yml) | Vulnerability Scan using [homoluctus/gitrivy](https://github.com/homoluctus/gitrivy), a GitHub Action that scan vulnerability using [Trivy](https://github.com/aquasecurity/trivy) |[![Vulnerability Scan with Trivy](https://github.com/yokawasa/actions-samples/workflows/Vulnerability%20Scan%20with%20Trivy/badge.svg)](https://github.com/yokawasa/actions-samples/actions?query=workflow%3A%22Vulnerability+Scan+with+Trivy%22) |
+
+## Tips
+- [How to refer versioned actions](docs/versioned-actions.md)
+- [GitHub Actions 101 Slides](https://speakerdeck.com/yokawasa/zozotechbook1-ch03-githubactions) (Sorry only in Japanease)
+
+## Contributing
+Bug reports and pull requests are welcome on GitHub at https://github.com/yokawasa/actions-samples
