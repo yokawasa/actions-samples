@@ -26,9 +26,17 @@ jobs:
     name: Data Share Between Multi-Steps using set-env and set-output
     runs-on: ubuntu-latest
     steps:
-      - run: echo ::set-env name=result1::Hello
-      - run: echo "Result1: ${result1}"
-      - id: makedata
-        run: echo ::set-output name=result2::Hola
-      - run: echo "Result2: ${{ steps.makedata.outputs.result2 }}"
+      - name: Set result1 using set-env
+        run: |
+          exec_time=$(date "+%s")
+          echo ::set-env name=result1::${exec_time}
+      - name: Read result1
+        run: echo "Result1: ${result1}"
+      - name: Set result2 using set-output
+        id: setdata
+        run: |
+          exec_time=$(date "+%s")
+          echo ::set-output name=result2::${exec_time}
+      - name: Read result2
+        run: echo "Result2: ${{ steps.setdata.outputs.result2 }}"
 
