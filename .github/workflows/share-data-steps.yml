@@ -17,26 +17,23 @@ jobs:
           echo "GITHUB_WORKSPACE: ${GITHUB_WORKSPACE}"
       - name: Write Data in a Job
         run: echo "Hello!!" > ${GITHUB_WORKSPACE}/myoutput.txt
-      - name: Read Data in a Job
-        run: |
-          value=$(cat ${GITHUB_WORKSPACE}/myoutput.txt)
-          echo "Read Data: ${value}"
+      - name: Read Data in a subsequent step of the Job
+        run: echo "$(cat ${GITHUB_WORKSPACE}/myoutput.txt)"
 
   share_data2:
     name: Data Share Between Multi-Steps using set-env and set-output
     runs-on: ubuntu-latest
     steps:
-      - name: Set result1 using set-env
+      - name: Set result1 using set-env in a job
         run: |
           exec_time=$(date "+%s")
           echo ::set-env name=result1::${exec_time}
-      - name: Read result1
-        run: echo "Result1: ${result1}"
+      - name: Get result1 in a subsequent step of the Job
+        run: echo "${result1}"
       - name: Set result2 using set-output
         id: setdata
         run: |
           exec_time=$(date "+%s")
           echo ::set-output name=result2::${exec_time}
-      - name: Read result2
-        run: echo "Result2: ${{ steps.setdata.outputs.result2 }}"
-
+      - name: Get result2 in a subsequent step of the Job
+        run: echo "${{ steps.setdata.outputs.result2 }}"
