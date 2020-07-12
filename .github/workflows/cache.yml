@@ -12,35 +12,38 @@ jobs:
     name: Caching with npm
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    #- name: Get npm cache directory
-    #  id: npm-cache
-    #  run: |
-    #    echo "::set-output name=dir::$(npm config get cache)"
-    - name: Cache node modules
-      uses: actions/cache@v1
-      env:
-        cache-name: cache-node-modules
-      with:
-        # npm cache files are stored in `~/.npm` on Linux/macOS
-        path: ~/.npm
-        # path: ${{ steps.npm-cache.outputs.dir }}
-        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-        restore-keys: |
-          ${{ runner.os }}-build-${{ env.cache-name }}-
-          ${{ runner.os }}-build-
-          ${{ runner.os }}-
+      - uses: actions/checkout@v2
+      #- name: Get npm cache directory
+      #  id: npm-cache
+      #  run: |
+      #    echo "::set-output name=dir::$(npm config get cache)"
+      - name: Cache node modules
+        uses: actions/cache@v1
+        env:
+          cache-name: cache-node-modules
+        with:
+          # npm cache files are stored in `~/.npm` on Linux/macOS
+          path: ~/.npm
+          # path: ${{ steps.npm-cache.outputs.dir }}
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
 
-    - name: Install Dependencies
-      run: npm install
+      - name: Install Dependencies
+        working-directory: ./resources/node
+        run: npm install
 
-    - name: Build
-      run: npm build
+      - name: Build
+        working-directory: ./resources/node
+        run: npm build
 
-    - name: Test
-      run: |
-        node app.js&
-        npm test
+      - name: Test
+        working-directory: ./resources/node
+        run: |
+          node app.js&
+          npm test
   
   cache2:
     name: Install only if cache not hit
@@ -52,11 +55,12 @@ jobs:
         id: cache
         with:
           #path: path/to/dependencies
-          path: /tmp
+          path: ~/.npm
           key: ${{ runner.os }}-${{ hashFiles('**/lockfiles') }}
 
       - name: Install Dependencies
         if: steps.cache.outputs.cache-hit != 'true'
+        working-directory: ./resources/node
         run: |
           echo "Installing something as cache not hit"
-          #./install.sh
+          npm install
