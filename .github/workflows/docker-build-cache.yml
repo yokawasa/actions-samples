@@ -13,7 +13,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: |
-          #cd docker-cache
           docker build . -t myimage
         working-directory: ./resources/docker-cache
 
@@ -24,7 +23,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: |
-          #cd docker-cache
           docker build . -t myimage
         working-directory: ./resources/docker-cache
 
@@ -40,7 +38,6 @@ jobs:
       - run: docker load -i /tmp/docker-cache/snapshot.tar || true
         if: steps.cache-docker.outputs.cache-hit == 'true'
       - run: |
-          #cd docker-cache
           # --cache-from option is used to specify a cached image to use in Docker build
           docker build . -t myimage --cache-from=myimage-cache
         working-directory: ./resources/docker-cache
