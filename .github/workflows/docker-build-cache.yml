@@ -1,0 +1,52 @@
+name: Docker build with cache
+on:
+  push:
+    branches:
+      - 'master'
+    paths:
+      - 'resources/docker-cache/*'
+      - '.github/workflows/docker-build-cache.yml'
+
+jobs:
+  docker_build_with_no_cache:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: |
+          cd docker-cache
+          docker build . -t myimage
+        working-directory: ./resources/docker-cache
+
+  docker_build_buildkit_with_no_cache:
+    runs-on: ubuntu-latest
+    env:
+      DOCKER_BUILDKIT: 1
+    steps:
+      - uses: actions/checkout@v2
+      - run: |
+          cd docker-cache
+          docker build . -t myimage
+        working-directory: ./resources/docker-cache
+
+  docker_build_with_cache:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - id: cache-docker
+        uses: actions/cache@v2
+        with:
+          path: /tmp/docker-cache
+          key: docker-cache-test-${{ hashFiles('docker-cache/Dockerfile') }}
+      - run: docker load -i /tmp/docker-cache/snapshot.tar || true
+        if: steps.cache-docker.outputs.cache-hit == 'true'
+      - run: |
+          cd docker-cache
+          # --cache-from option is used to specify a cached image to use in Docker build
+          docker build . -t myimage --cache-from=myimage-cache
+        working-directory: ./resources/docker-cache
+      - run: |
+          docker tag myimage myimage-cache
+          mkdir -p /tmp/docker-cache
+          docker save myimage-cache -o /tmp/docker-cache/snapshot.tar
+          ls -lh /tmp/docker-cache || true
+        if: always() && steps.cache-docker.outputs.cache-hit != 'true'
