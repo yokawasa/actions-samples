@@ -1,6 +1,6 @@
 # actions-samples
 
-A collection of GitHub Actions samples and tips
+A collection of GitHub Actions workflow samples and tips
 
 
 ![](assets/logo.png)
@@ -24,6 +24,7 @@ A collection of GitHub Actions samples and tips
 | [Vulnerability Scan with Trivy](.github/workflows/trivy-scan.yml) | Vulnerability Scan using [homoluctus/gitrivy](https://github.com/homoluctus/gitrivy), a GitHub Action that scan vulnerability using [Trivy](https://github.com/aquasecurity/trivy) |[![Vulnerability Scan with Trivy](https://github.com/yokawasa/actions-samples/workflows/Vulnerability%20Scan%20with%20Trivy/badge.svg)](https://github.com/yokawasa/actions-samples/actions?query=workflow%3A%22Vulnerability+Scan+with+Trivy%22) |
 | [Setup Kube tools with custom action](.github/workflows/setup-kube-tools.yml) | Setup Kubernetes tools using custom TypeScript action, [yokawasa/action-setup-kube-tools](https://github.com/yokawasa/action-setup-kube-tools). Please see [this](https://docs.github.com/en/actions/creating-actions/creating-a-javascript-action) for detail of creating custom TS or JS action | [![Setup Kubernetes Tools](https://github.com/yokawasa/actions-samples/workflows/Setup%20Kubernetes%20Tools/badge.svg)](https://github.com/yokawasa/actions-samples/actions?query=workflow%3A%22Setup+Kubernetes+Tools%22) |
 | [Docker build with cache](.github/workflows/docker-build-cache.yml) | Sample of speeding up Docker build using a cached Docker image where [action/cache](https://github.com/actions/cache) is used to chache Docker image and [--cache-from](https://cloud.google.com/cloud-build/docs/speeding-up-builds) option is used to specify a cached image to use in Docker build | [![Docker build with cache](https://github.com/yokawasa/actions-samples/workflows/Docker%20build%20with%20cache/badge.svg)](https://github.com/yokawasa/actions-samples/actions?query=workflow%3A%22Docker+build+with+cache%22) |
+| [Workflow conclusion](.github/workflows/workflow-conclusion.yml) | Sample of getting correct workflow conclusion (success or failure) using [technote-space/workflow-conclusion-action](https://github.com/technote-space/workflow-conclusion-action). An alternative way is to use GitHub Workflow Job API directlly in the workflow, but this is much easier | []() |
 
 ## Tips
 - [How to refer versioned actions](docs/versioned-actions.md)

@@ -1,0 +1,61 @@
+name: Workflow conclusion
+on:
+  push:
+    branches:
+      - 'master'
+    paths:
+      - '.github/workflows/cache.yml'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - run: exit 0
+  test:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - run: exit 1
+  publish:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - run: exit 0
+
+  ## This is NOT a correct way to get workflow conclusion
+  ## The workflow conclusion is always success
+  get_workflow_conclusion_wrong_way:
+    if: always()
+    needs: publish
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo "let's see the workflow conclusion"
+          echo ${{ job.status }}
+
+  ## This is a correct way to get workflow conclusion
+  get_workflow_conclusion_correct_way:
+    if: always()
+    needs: publish
+    runs-on: ubuntu-latest
+    steps:
+      - uses: technote-space/workflow-conclusion-action@v1
+      - run: |
+          echo "let's see the workflow conclusion"
+          echo ${{ env.WORKFLOW_CONCLUSION }}
+
+  ## Example
+  #slack-notification:
+  #  if: always()
+  #  needs:  publish
+  #  runs-on: ubuntu-latest
+  #  steps:
+  #    - uses: technote-space/workflow-conclusion-action@v1
+  #    - name: Slack Notification
+  #      uses: sonots/slack-notice-action@v3
+  #      with:
+  #        title: My deployment
+  #        status: ${{ env.WORKFLOW_CONCLUSION }}
+  #      env:
+  #        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  #        SLACK_WEBHOOK_URL: ${{ secrets.MY_GITHUB_CHANNEL_WEBHOOK }}
