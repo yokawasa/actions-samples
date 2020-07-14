@@ -24,7 +24,7 @@ jobs:
 
   ## This is NOT a correct way to get workflow conclusion
   ## The workflow conclusion is always success
-  get_workflow_conclusion_wrong_way:
+  WRONG_conclusion:
     if: always()
     needs: publish
     runs-on: ubuntu-latest
@@ -34,7 +34,7 @@ jobs:
           echo ${{ job.status }}
 
   ## This is a correct way to get workflow conclusion
-  get_workflow_conclusion_correct_way:
+  CORRECT_conclusion:
     if: always()
     needs: publish
     runs-on: ubuntu-latest
