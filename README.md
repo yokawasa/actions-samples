@@ -1,6 +1,6 @@
 # actions-samples
 
-A collection of GitHub Actions workflow samples and tips
+A collection of practical GitHub Actions workflow samples and tips
 
 
 ![](assets/logo.png)
