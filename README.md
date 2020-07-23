@@ -29,7 +29,7 @@ A collection of practical GitHub Actions workflow samples and tips
 
 ## Tips
 - [How to refer versioned actions](docs/versioned-actions.md)
-- [Action inputs](docs/action-inputs.md)
+- [Action inputs and outputs](docs/action-inputs-outputs.md)
 - [GitHub Actions 101 Slides](https://speakerdeck.com/yokawasa/zozotechbook1-ch03-githubactions) (Sorry only in Japanease)
 
 ## Contributing
